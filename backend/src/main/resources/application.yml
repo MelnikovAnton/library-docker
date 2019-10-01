@@ -4,7 +4,7 @@ logging:
     root: INFO
     org:
       springframework:
-        security: TRACE
+        security: WARN
         boot:
           autoconfigure: INFO
         data.mongodb.core.MongoTemplate: INFO

@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    container_name: library-mongo
+
+  backend:
+    build: ./backend
+    restart: always
+    container_name: backend
+    ports:
+      - 8080:8080
+    working_dir: /app
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    restart: always
+    container_name: frontend
+    ports:
+      - 8090:80
+    depends_on:
+      - backend

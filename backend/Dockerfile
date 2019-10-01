@@ -21,4 +21,4 @@ COPY --from=0 $PROJECT_DIR/target/library.jar $PROJECT_DIR/library.jar
 
 EXPOSE 8080
 
-CMD ["java","-Dspring.data.mongodb.uri=mongodb://host.docker.internal","-jar" ,"library.jar"]
+CMD ["java","-Dspring.data.mongodb.uri=mongodb://library-mongo","-jar" ,"library.jar"]
