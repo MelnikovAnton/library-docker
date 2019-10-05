@@ -1,0 +1,52 @@
+logging:
+  file: log/log.log
+  level:
+    root: INFO
+    org:
+      springframework:
+        security: WARN
+        boot:
+          autoconfigure: INFO
+        data.mongodb.core.MongoTemplate: INFO
+
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - metrics
+          - health
+          - logfile
+          - shutdown
+          - beans
+          - threaddump
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+
+
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO}
+      port: 27017
+      database: library
+  profiles:
+    active: @profile@
+
+
+security:
+  oauth2:
+    client:
+      client-id: client
+      client-secret: secret
+
