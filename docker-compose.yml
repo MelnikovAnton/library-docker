@@ -21,6 +21,8 @@ services:
     build: ./frontend
     restart: always
     container_name: frontend
+    environment:
+      - PORT=${PORT:-80}
     ports:
       - 8090:80
     depends_on:

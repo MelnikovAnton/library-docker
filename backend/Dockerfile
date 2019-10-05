@@ -14,6 +14,7 @@ RUN mvn install
 FROM openjdk:12-jdk
 
 ENV PROJECT_DIR=/app
+ENV MONGO=mongodb://library-mongo
 RUN mkdir -p $PROJECT_DIR
 WORKDIR $PROJECT_DIR
 
@@ -21,4 +22,4 @@ COPY --from=0 $PROJECT_DIR/target/library.jar $PROJECT_DIR/library.jar
 
 EXPOSE 8080
 
-CMD ["java","-Dspring.data.mongodb.uri=mongodb://library-mongo","-jar" ,"library.jar"]
+CMD ["java","-jar" ,"library.jar"]
