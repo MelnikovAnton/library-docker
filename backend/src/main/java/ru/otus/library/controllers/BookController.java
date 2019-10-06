@@ -14,12 +14,12 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class BookController {
 
-    @Value("${spring.profiles.active}")
-    private String isDev;
+//    @Value("${spring.profiles.active}")
+//    private String isDev;
 
     @GetMapping("/*")
     public String getBookList(Model model/*, @AuthenticationPrincipal User user*/) {
-        model.addAttribute("isDevMode", "dev".equals(isDev));
+//        model.addAttribute("isDevMode", "dev".equals(isDev));
         return "bookList";
     }
 
