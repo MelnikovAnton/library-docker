@@ -9,6 +9,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Iterator;
 
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -23,7 +24,14 @@ public class OAuthCorsFilter implements Filter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-log.info(req.toString());
+
+        Iterator<String> iter = ((HttpServletRequest) req).getHeaderNames().asIterator();
+        while (iter.hasNext()){
+            String header = iter.next();
+            System.out.println(header +" " + ((HttpServletRequest) req).getHeader(header));
+        }
+
+
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
