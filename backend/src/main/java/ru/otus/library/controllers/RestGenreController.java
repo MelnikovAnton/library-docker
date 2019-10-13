@@ -1,4 +1,4 @@
-package ru.otus.library.controllers.rest;
+package ru.otus.library.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

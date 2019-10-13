@@ -1,4 +1,4 @@
-FROM maven:3.6.2-jdk-12
+FROM melnikoffaa/library:v3
 
 ENV PROJECT_DIR=/app
 
@@ -6,20 +6,22 @@ RUN mkdir -p $PROJECT_DIR
 WORKDIR $PROJECT_DIR
 
 ADD ./pom.xml $PROJECT_DIR
-RUN mvn dependency:resolve
 
 ADD ./src $PROJECT_DIR/src
-RUN mvn install
+RUN mvn package
 
 FROM openjdk:12-jdk
 
+RUN yum install -y curl
+
 ENV PROJECT_DIR=/app
-ENV MONGO=mongodb://library-mongo
+
 RUN mkdir -p $PROJECT_DIR
 WORKDIR $PROJECT_DIR
 
 COPY --from=0 $PROJECT_DIR/target/config-server.jar $PROJECT_DIR/config-server.jar
+ADD ./wrapper.sh $PROJECT_DIR
 
-EXPOSE 8080
+EXPOSE 5000
 
-CMD ["java","-jar" ,"config-server.jar"]
+CMD ["./wrapper.sh" , "http://eureka-server:8001" ,"java","-jar" ,"config-server.jar"]

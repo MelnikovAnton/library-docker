@@ -1,4 +1,4 @@
-package ru.otus.library.config;
+package ru.melnikov.libraryutil.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

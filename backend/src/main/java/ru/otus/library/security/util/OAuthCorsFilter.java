@@ -25,12 +25,13 @@ public class OAuthCorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Headers", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
 
-        Iterator<String> iter = ((HttpServletRequest) req).getHeaderNames().asIterator();
-        while (iter.hasNext()){
-            String header = iter.next();
-            System.out.println(header +" " + ((HttpServletRequest) req).getHeader(header));
+        if (log.isDebugEnabled()) {
+            Iterator<String> iter = ((HttpServletRequest) req).getHeaderNames().asIterator();
+            while (iter.hasNext()) {
+                String header = iter.next();
+                log.debug(header + " " + ((HttpServletRequest) req).getHeader(header));
+            }
         }
-
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);

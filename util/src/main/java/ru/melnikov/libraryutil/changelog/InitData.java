@@ -1,18 +1,11 @@
-package ru.otus.library.changelog;
+package ru.melnikov.libraryutil.changelog;
 
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 import com.mongodb.client.MongoDatabase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.otus.library.model.Author;
-import ru.otus.library.model.Book;
-import ru.otus.library.model.Comment;
-import ru.otus.library.model.Genre;
-import ru.otus.library.security.model.Role;
-import ru.otus.library.security.model.UserEntity;
+import ru.melnikov.libraryutil.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +15,6 @@ import java.util.Set;
 @ChangeLog(order = "001")
 public class InitData {
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     private final List<Genre> genres = new ArrayList<>();
     private final List<Author> authors = new ArrayList<>();
@@ -73,7 +64,6 @@ public class InitData {
 
         template.save(user);
     }
-
 
     private List<Author> getAuthors() {
         return List.of(new Author("Author1"),
