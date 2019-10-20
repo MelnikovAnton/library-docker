@@ -68,6 +68,22 @@ services:
       timeout: 10s
       retries: 5
 
+  oauth-server:
+    build: ./oauth-server
+    container_name: oauth-server
+    working_dir: /app
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+      - config-server
+      - eureka-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
   backend:
     build: ./backend
     restart: always
