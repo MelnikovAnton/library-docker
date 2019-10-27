@@ -1,47 +1,46 @@
 package ru.melnikov.zuulservicegateway.config;
 
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.client.OAuth2RestOperations;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
-import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
-@EnableZuulProxy
+
 @Configuration
-@EnableOAuth2Sso
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableResourceServer
+public class SecurityConfig extends ResourceServerConfigurerAdapter {
 
-        @Override
-        protected void configure(HttpSecurity http)
-        throws Exception {
-            http.antMatcher("/**")
-                    .authorizeRequests()
-                    .antMatchers("/", "/webjars/**")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated()
-                    .and()
-                    .logout()
-                    .logoutSuccessUrl("/")
-                    .permitAll()
-                    .and()
-                    .csrf()
-                    .csrfTokenRepository(
-                            CookieCsrfTokenRepository
-                                    .withHttpOnlyFalse());
-        }
+    @Override
+    public void configure(final HttpSecurity http) throws Exception {
+        http.authorizeRequests().
+                antMatchers("/oauth/**", "/actuator/**", "/oauth-server/**").
+                permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"/backend/**").permitAll()
+                .antMatchers("/**").
+                authenticated();
+    }
 
-        @Bean
-        public OAuth2RestOperations restOperations(
-                OAuth2ProtectedResourceDetails resource,
-                OAuth2ClientContext context) {
-            return new OAuth2RestTemplate(resource, context);
-        }
+    @Bean
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("HEAD");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("PATCH");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
 
 }

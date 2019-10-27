@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-const authors = Vue.resource('http://localhost:8080/authors{/id}')
+const authors = Vue.resource('http://localhost:8765/backend/authors{/id}')
 
 export default {
     add: author => {
@@ -55,7 +55,7 @@ export default {
 }
 
 async function refresh() {
-    return axios.post('http://localhost:8080/oauth/token',
+    return axios.post('http://localhost:8765/oauth/token',
         'grant_type=refresh_token' +
         '&refresh_token=' + localStorage.getItem('refreshToken') +
         '&scope=read write'

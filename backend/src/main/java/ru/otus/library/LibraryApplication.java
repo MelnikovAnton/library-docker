@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 @SpringBootApplication(/*exclude = {
         org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
 }*/)
-@EnableAuthorizationServer
 @EnableResourceServer
 @EnableIntegration
 @IntegrationComponentScan

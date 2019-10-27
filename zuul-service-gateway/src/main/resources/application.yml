@@ -1,12 +1,23 @@
 security:
   oauth2:
     client:
-      accessTokenUri: http://localhost:8081/authserver/oauth/token
-      userAuthorizationUri: http://localhost:8081/authserver/oauth/authorize
+      accessTokenUri: http://localhost:8081/oauth/token
+      userAuthorizationUri: http://localhost:8081/oauth/authorize
       clientId: client
       clientSecret: secret
     resource:
-      userInfoUri: http://localhost:8081/authserver/user
+      tokenInfoUri: http://localhost:8081/oauth/check_token
+
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie
+  ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+  routes:
+#    library-api:
+#      path: /backend/**
+#      url: http://localhost:8080/
+    oauth:
+      path: /oauth/**
+      url: http://localhost:8081/oauth
 
 logging:
   #  file: log/log.log

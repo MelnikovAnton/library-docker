@@ -2,6 +2,7 @@ package ru.melnikov.oauthserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @SpringBootApplication
+@EnableEurekaClient
 public class OauthServerApplication {
 
     public static void main(String[] args) {

@@ -71,14 +71,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
 
-    @Bean
-    public RemoteTokenServices remoteTokenServices() {
-        final RemoteTokenServices tokenServices = new RemoteTokenServices();
-        tokenServices.setCheckTokenEndpointUrl("http://localhost:8080/oauth/check_token");
-        tokenServices.setClientId("client");
-        tokenServices.setClientSecret("secret");
-        return tokenServices;
-    }
+//    @Bean
+//    public RemoteTokenServices remoteTokenServices() {
+//        final RemoteTokenServices tokenServices = new RemoteTokenServices();
+//        tokenServices.setCheckTokenEndpointUrl("http://localhost:8081/oauth/check_token");
+////        tokenServices.setClientId("client");
+////        tokenServices.setClientSecret("secret");
+//        return tokenServices;
+//    }
 
     @Bean
     public AuthenticationProvider authProvider() {
