@@ -1,5 +1,6 @@
 package ru.otus.library.services.impl;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,32 +24,32 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-//    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBook")
+    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBook")
     public Book saveBook(Book book) {
         log.info("Save book " + book);
         return bookIntegrationService.createBook(book);
     }
 
     @Override
-//    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBooks")
+    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBooks")
     public List<Book> findBooksByTitle(String title) {
         return bookRepository.findByTitleContaining(title);
     }
 
     @Override
-//    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBooks")
+    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBooks")
     public List<Book> findBooksByAuthor(String author) {
         return bookRepository.findByAuthorsNameContains(author);
     }
 
     @Override
-//    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBooks")
+    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBooks")
     public List<Book> findBooksByGenre(String genre) {
         return bookRepository.findByGenresNameContains(genre);
     }
 
     @Override
-//    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBookOptional")
+    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBookOptional")
     public Optional<Book> findById(String id) {
         try {
             return bookRepository.findById(id);
@@ -60,7 +61,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-//    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBookDelete")
+    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBookDelete")
     public String delete(Book book) {
         log.info("Delete book " + book);
         bookIntegrationService.deleteBook(book);
@@ -68,8 +69,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-//    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBooks")
+    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBooks")
     public List<Book> findAll() {
+        try {
+            Thread.sleep(70000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return bookRepository.findAll();
     }
 
@@ -85,6 +91,10 @@ public class BookServiceImpl implements BookService {
     }
 
     public List<Book> buildFallbackBooks(String book) {
+        log.warn("Hystrix fallback. Return empty List");
+        return new ArrayList<>();
+    }
+    public List<Book> buildFallbackBooks() {
         log.warn("Hystrix fallback. Return empty List");
         return new ArrayList<>();
     }

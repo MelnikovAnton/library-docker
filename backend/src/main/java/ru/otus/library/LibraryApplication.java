@@ -3,6 +3,7 @@ package ru.otus.library;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
 @EnableIntegration
 @IntegrationComponentScan
 @EnableEurekaClient
+@EnableCircuitBreaker
 public class LibraryApplication {
 
 
