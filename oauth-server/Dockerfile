@@ -22,6 +22,6 @@ WORKDIR $PROJECT_DIR
 COPY --from=0 $PROJECT_DIR/target/oauth-server.jar $PROJECT_DIR/oauth-server.jar
 ADD ./wrapper.sh $PROJECT_DIR
 
-EXPOSE 7070
+EXPOSE 8081
 
-CMD ["./wrapper.sh" , "http://config-server:5000/actuator","java","-jar" ,"library.jar"]
+CMD ["./wrapper.sh" , "http://config-server:5000/actuator","java","-jar" ,"oauth-server.jar"]

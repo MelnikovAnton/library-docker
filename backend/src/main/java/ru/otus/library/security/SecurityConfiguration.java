@@ -25,7 +25,6 @@ import ru.otus.library.security.services.CustomDetailsService;
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -69,16 +68,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-
-
-//    @Bean
-//    public RemoteTokenServices remoteTokenServices() {
-//        final RemoteTokenServices tokenServices = new RemoteTokenServices();
-//        tokenServices.setCheckTokenEndpointUrl("http://localhost:8081/oauth/check_token");
-////        tokenServices.setClientId("client");
-////        tokenServices.setClientSecret("secret");
-//        return tokenServices;
-//    }
 
     @Bean
     public AuthenticationProvider authProvider() {

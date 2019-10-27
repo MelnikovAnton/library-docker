@@ -24,7 +24,7 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBook")
+//    @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBook")
     public Book saveBook(Book book) {
         log.info("Save book " + book);
         return bookIntegrationService.createBook(book);
@@ -71,11 +71,11 @@ public class BookServiceImpl implements BookService {
     @Override
     @HystrixCommand(commandKey="bookCommands", fallbackMethod="buildFallbackBooks")
     public List<Book> findAll() {
-        try {
-            Thread.sleep(70000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(70000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return bookRepository.findAll();
     }
 
