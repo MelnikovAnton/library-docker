@@ -11,6 +11,7 @@ import ru.otus.library.repository.BookRepository;
 import ru.otus.library.services.BookService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,11 +93,11 @@ public class BookServiceImpl implements BookService {
 
     public List<Book> buildFallbackBooks(String book) {
         log.warn("Hystrix fallback. Return empty List");
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
     public List<Book> buildFallbackBooks() {
         log.warn("Hystrix fallback. Return empty List");
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     public Optional<Book> buildFallbackBookOptional(String book) {
