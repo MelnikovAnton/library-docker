@@ -78,16 +78,4 @@ public class AclConfig {
         return new MongoDBMutableAclService(aclRepository, lookupStrategy, aclCache());
     }
 
-
-//    @Bean
-//    public LookupStrategy lookupStrategy() {
-//        return new BasicLookupStrategy(dataSource, aclCache(), aclAuthorizationStrategy(), new ConsoleAuditLogger());
-//    }
-
-//    @Bean
-//    public AclService aclService() {
-//        return new JdbcMutableAclService(dataSource, lookupStrategy(), aclCache());
-//    }
-
-
 }

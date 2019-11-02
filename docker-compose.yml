@@ -5,7 +5,84 @@ services:
   mongo:
     image: mongo
     restart: always
+    ports:
+      - 27017:27017
     container_name: library-mongo
+
+  config-server:
+    build: ./config-server
+    restart: always
+    container_name: config-server
+    ports:
+      - 5000:5000
+    working_dir: /app
+    depends_on:
+      - eureka-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  eureka-server:
+    build: ./eureka
+    restart: always
+    container_name: eureka-server
+    ports:
+      - 8001:8001
+    working_dir: /app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  zuul-server:
+    build: ./zuul-service-gateway
+    restart: always
+    container_name: zuul-server
+    ports:
+      - 8765:8765
+    working_dir: /app
+    depends_on:
+      - eureka-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8765"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  util:
+    build: ./util
+    container_name: util
+    working_dir: /app
+    ports:
+      - 7070:7070
+    depends_on:
+      - mongo
+      - config-server
+      - eureka-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  oauth-server:
+    build: ./oauth-server
+    container_name: oauth-server
+    working_dir: /app
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+      - config-server
+      - eureka-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   backend:
     build: ./backend
@@ -15,7 +92,10 @@ services:
       - 8080:8080
     working_dir: /app
     depends_on:
+      - eureka-server
+      - config-server
       - mongo
+      - util
 
   frontend:
     build: ./frontend

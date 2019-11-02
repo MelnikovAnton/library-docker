@@ -10,7 +10,7 @@ export default class AuthApi {
     login(username, password) {
 
         // if using axios
-        const promise = axios.post('http://localhost:8080/oauth/token', 'grant_type=password&username='+username+'&password='+password+'&scope=read write'
+        const promise = axios.post('http://localhost:8765/oauth/token', 'grant_type=password&username='+username+'&password='+password+'&scope=read write'
         ,{
             auth: {
                 username: 'client',
@@ -23,7 +23,7 @@ export default class AuthApi {
 
     validateToken(token) {
 
-        const promise = axios.post('http://localhost:8080/oauth/check-token', {
+        const promise = axios.post('http://localhost:8765/oauth/check-token', {
             token
         });
 
@@ -39,7 +39,7 @@ export default class AuthApi {
           return
         } else {
             console.log('refresh token')
-            const promise = axios.post('http://localhost:8080/oauth/token',
+            const promise = axios.post('http://localhost:8765/oauth/token',
                 'grant_type=refresh_token' +
                 '&refresh_token=' + localStorage.getItem(refreshToken) +
                 '&scope=read write'

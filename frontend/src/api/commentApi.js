@@ -2,7 +2,7 @@ import Vue from 'vue'
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
-const comments = Vue.resource('http://localhost:8080/comments{/id}')
+const comments = Vue.resource('http://localhost:8765/backend/comments{/id}')
 
 export default {
     add: comment => {
@@ -56,7 +56,7 @@ export default {
 }
 
 async function refresh() {
-    return axios.post('http://localhost:8080/oauth/token',
+    return axios.post('http://localhost:8765/oauth/token',
         'grant_type=refresh_token' +
         '&refresh_token=' + localStorage.getItem('refreshToken') +
         '&scope=read write'

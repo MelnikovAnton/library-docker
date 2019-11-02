@@ -3,7 +3,7 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import router from "router/router";
 
-const books = Vue.resource('http://localhost:8080/books{/id}')
+const books = Vue.resource('http://localhost:8765/backend/books{/id}')
 
 export default {
     add: book => {
@@ -62,7 +62,7 @@ console.log(accessToken)
 }
 
 async function refresh() {
-    return axios.post('http://localhost:8080/oauth/token',
+    return axios.post('http://localhost:8765/oauth/token',
         'grant_type=refresh_token' +
         '&refresh_token=' + localStorage.getItem('refreshToken') +
         '&scope=read write'
